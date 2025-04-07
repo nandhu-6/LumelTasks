@@ -8,6 +8,9 @@ function App() {
 
   const handleInputChange = (id, value) => {
     setInput((prevData) => ({ ...prevData, [id]: value }));
+    // console.log(input);
+    //input has  : electronics : "10"
+    
   };
 
   const calculateVariance = (newValue, oldValue) => {
@@ -15,7 +18,7 @@ function App() {
   };
 
   const updateRowData = (id, isPercentage) => {
-    let updatedRows = [...rows]; //copy of entire rows state
+    const updatedRows = [...rows]; //copy of entire rows state
     const updatedRow = updateSingleRow(updatedRows, id, isPercentage);
     setRows(updatedRow);
   };
@@ -29,20 +32,20 @@ function App() {
           row.value += row.value * (input[id] / 100); //calculates percentage
           if (row.children) { //if any child is present
             row.children = row.children.map((child) => { //traverse each child and calculate child variance
-              let childOldValue = child.value;
+              const childOldValue = child.value;
               child.value += child.value * (input[id] / 100);
               child.variance = calculateVariance(child.value, childOldValue);
               return child;
             });
           }
         } else { //if set value
-          let oldRowValue = row.value;
+          const oldRowValue = row.value;
           row.value = Number(input[id]);
 
           if (row.children) {
             row.children = row.children.map((child) => {
-              let oldChildValue = child.value;
-              let proportion = oldChildValue / oldRowValue;
+              const oldChildValue = child.value;
+              const proportion = oldChildValue / oldRowValue;
               child.value = Number((row.value * proportion).toFixed(2));
               child.variance = calculateVariance(child.value, oldChildValue);
               return child;
